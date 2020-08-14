@@ -15,7 +15,7 @@ setup(
     ext_modules=ext_modules
 )
 
-# setup(
-#     ext_modules = cythonize("ris_helper.pyx"),
-#     include_dirs=[np.get_include()]
-# )
+setup(
+    ext_modules = cythonize("ris_helper.pyx"),
+    include_dirs=[np.get_include()]
+)
