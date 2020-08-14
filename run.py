@@ -1,11 +1,11 @@
 from src.algorithm.instance_selection.classification.ris.ris import ris1, ris2, ris3, classify
 from src.dataset.keel_dataset import load_from_file
+from src.feature_selection.feature_selection import select_the_best_attributes_only
 from sklearn.metrics import accuracy_score
 import numpy as np
 import datetime
 import time
 import json
-import sys
 import os
 
 BASE_DATA = 'data'
@@ -63,6 +63,8 @@ def ris(dataset, method, thresholds, fold, n_jobs = 4):
         # Convert data to numpy array
         X_train, y_train = datatrain.get_data_target()
         X_train, y_train = X_train.astype('float'), y_train.astype(int)
+
+        X_train, y_train = select_the_best_attributes_only(X_train, y_train)
 
         selection = None
         radius = None
@@ -172,7 +174,7 @@ if __name__ == '__main__':
                 if not os.path.exists(directory):
                     os.makedirs(directory)
 
-                filename = f'{method}-{dataset}.json'
+                filename = f'{method}-{dataset}-features-selected.json'
                 with open(os.path.join(directory, filename), 'w') as outfile:
                     json.dump(results, outfile)
 
