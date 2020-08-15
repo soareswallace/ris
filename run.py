@@ -64,8 +64,6 @@ def ris(dataset, method, thresholds, fold, n_jobs = 4):
         X_train, y_train = datatrain.get_data_target()
         X_train, y_train = X_train.astype('float'), y_train.astype(int)
 
-        # X_train, y_train = select_the_best_attributes_only(X_train, y_train)
-
         selection = None
         radius = None
 
@@ -98,6 +96,11 @@ def ris(dataset, method, thresholds, fold, n_jobs = 4):
 
         # important instance from prototype selection method
         X_selection = X_train[selection]
+
+        attributes = select_the_best_attributes_only(X_selection, y_train)
+
+        X_selection = X_selection[:, attributes]
+        X_train = X_train[:, attributes]
     
         selection = np.array(selection)
         radius = np.concatenate(radius)
@@ -119,6 +122,8 @@ def ris(dataset, method, thresholds, fold, n_jobs = 4):
         # Convert data to numpy array
         X_test, y_test = datatest.get_data_target()
         X_test, y_test = X_test.astype('float'), y_test.astype(int)
+
+        X_test = X_test[:, attributes]
 
         # classify all instances in test set
         index = classify(X_test, X_selection, radius)
@@ -174,8 +179,7 @@ if __name__ == '__main__':
                 if not os.path.exists(directory):
                     os.makedirs(directory)
 
-                filename = f'{method}-{dataset}.json'
-                # filename = f'{method}-{dataset}-features-selected.json'
+                filename = f'{method}-{dataset}-ris-then-selection.json'
                 with open(os.path.join(directory, filename), 'w') as outfile:
                     json.dump(results, outfile)
 
