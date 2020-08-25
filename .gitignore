@@ -195,3 +195,6 @@ MANIFEST
 # Jetbrains IDE project files
 /.idea
 /*.iml
+
+#results
+/results
