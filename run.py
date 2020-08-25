@@ -96,8 +96,9 @@ def ris(dataset, method, thresholds, fold, n_jobs = 4):
 
         # important instance from prototype selection method
         X_selection = X_train[selection]
+        y_selection = y_train[selection]
 
-        attributes = select_the_best_attributes_only(X_selection, y_train)
+        attributes = select_the_best_attributes_only(X_selection, y_selection)
 
         X_selection = X_selection[:, attributes]
         X_train = X_train[:, attributes]
