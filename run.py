@@ -66,6 +66,8 @@ def ris(dataset, method, thresholds, fold, n_jobs = 4):
 
         attributes = select_the_best_attributes_only(X_train, y_train)
 
+        results[t]['reduction_in_attributes'] = (1 - len(attributes)/len(X_train[0]))*100
+
         X_train = X_train[:, attributes]
 
         selection = None
@@ -148,7 +150,7 @@ if __name__ == '__main__':
     methods = ['ris1', 'ris2', 'ris3']
 
     # Set datasets
-    datasets = ['appendicitis', 'adult', 'balance']
+    datasets = ['appendicitis', 'adult', 'balance', 'heart']
 
     for dataset in datasets:
         log(f'{dataset} -> \t', end='')
