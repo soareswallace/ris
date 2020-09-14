@@ -150,7 +150,7 @@ if __name__ == '__main__':
     methods = ['ris1', 'ris2', 'ris3']
 
     # Set datasets
-    datasets = ['appendicitis', 'adult', 'balance', 'heart']
+    datasets = ['coil2000'];
 
     for dataset in datasets:
         log(f'{dataset} -> \t', end='')
