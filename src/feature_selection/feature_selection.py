@@ -1,4 +1,4 @@
-from skfeature.function.statistical_based.gini_index import gini_index, feature_ranking
+from skfeature.function.statistical_based.gini_index import gini_index
 import random
 
 
