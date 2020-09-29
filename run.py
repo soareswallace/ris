@@ -98,17 +98,18 @@ def ris(dataset, method, thresholds, fold, n_jobs = 4):
         X_selection = X_train[selection]
         y_selection = y_train[selection]
 
+        # Compute reduction rate for instance method
+        results[t]['reduction'] = (100 * (1 - (X_selection.shape[0] / X_train.shape[0])))
+
+        # gini index feature reduction
         attributes = select_the_best_attributes_only(X_selection, y_selection)
         results[t]['reduction_in_attributes'] = (1 - len(attributes)/len(X_train[0]))*100;
-
         X_selection = X_selection[:, attributes]
         X_train = X_train[:, attributes]
-    
+
         selection = np.array(selection)
         radius = np.concatenate(radius)
 
-        # Compute reduction rate for instance method
-        results[t]['reduction'] = (100 * (1 - (X_selection.shape[0] / X_train.shape[0])))
 
         # Apply train set as validation set
         # classify all instances in train set
@@ -151,7 +152,7 @@ if __name__ == '__main__':
     methods = ['ris1', 'ris2', 'ris3']
 
     # Set datasets
-    datasets = ['appendicitis', 'adult', 'coil2000']
+    datasets = ['connect-4', 'contraceptive', 'haberman', 'hayes-roth', 'heart', 'ionosphere', 'led7digit', 'marketing', 'monk-2', 'movement_libras', 'pima', 'satimage', 'segment', 'titanic', 'vowel', 'wine', 'winequalty-red', 'winequalty-white', 'yeast']
 
     for dataset in datasets:
         log(f'{dataset} -> \t', end='')
